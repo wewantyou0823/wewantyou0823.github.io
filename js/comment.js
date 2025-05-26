@@ -1,42 +1,47 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const input = document.getElementById('comment-input');
-    const author = document.getElementById('comment-author');
-    const button = document.getElementById('submit-comment');
-    const list = document.getElementById('comment-list');
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxW2rFfVa_dU1rok8P7NgSycQxerFBK2e2iL77adEdi8ZksbQ3vNhVFtkrGxEXkv0As/exec';
 
-    function loadComments() {
-        const saved = JSON.parse(localStorage.getItem('comments') || '[]');
-        list.innerHTML = '';
-        saved.reverse().forEach(comment => {
-            const div = document.createElement('div');
-            div.className = 'comment section8-main';
-            div.style.color = 'black'; // 텍스트 색상 검정
-            div.innerHTML = `<div>${comment.text} - <strong>${comment.author}</strong></div>
-                             <div class="comment-time">${new Date(comment.time).toLocaleString()}</div>`;
-            list.appendChild(div);
-        });
+document.getElementById('submit-comment').addEventListener('click', () => {
+  const name = document.getElementById('comment-name').value.trim() || "익명";
+  const comment = document.getElementById('comment-input').value.trim();
+
+  if (!comment) {
+    alert("댓글을 입력해주세요!");
+    return;
+  }
+
+  fetch(scriptURL, {
+    method: 'POST',
+    body: JSON.stringify({ name, comment }),
+    headers: {
+      'Content-Type': 'application/json'
     }
-
-    function saveComment(text, authorName) {
-        const existing = JSON.parse(localStorage.getItem('comments') || '[]');
-        existing.push({ text: text.trim(), author: authorName.trim(), time: Date.now() });
-        localStorage.setItem('comments', JSON.stringify(existing));
-    }
-
-    if (button) {
-        button.addEventListener('click', () => {
-            const text = input.value.trim();
-            const authorName = author.value.trim() || '익명';
-            if (text === '') {
-                alert('메시지를 입력해주세요!');
-                return;
-            }
-            saveComment(text, authorName);
-            input.value = '';
-            author.value = '';
-            loadComments();
-        });
-    }
-
+  })
+  .then(() => {
+    document.getElementById('comment-input').value = '';
+    document.getElementById('comment-name').value = '';
     loadComments();
+  })
+  .catch(err => {
+    alert("댓글 저장 중 오류가 발생했습니다.");
+    console.error(err);
+  });
 });
+
+function loadComments() {
+  fetch(scriptURL)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('comment-list');
+      list.innerHTML = '';
+      data.forEach(entry => {
+        const div = document.createElement('div');
+        div.className = 'comment';
+        div.innerHTML = `<strong>${entry.name}</strong>: ${entry.comment}<br/>
+                         <span class="comment-time">${new Date(entry.time).toLocaleString()}</span>`;
+        list.appendChild(div);
+      });
+    });
+}
+
+// 초기 로딩 시 실행
+loadComments();

@@ -471,6 +471,27 @@ header {
   box-shadow : 2px 2px 5px #999;
 }
 
+textarea,
+input {
+  width: 100%;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.5em 1em;
+  font-size: 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#comment-list {
+  margin-top: 2em;
+}
+
 .comment {
   font-family: NanumMyeongjo-b;
   border-bottom: 1px solid #1e0101;
