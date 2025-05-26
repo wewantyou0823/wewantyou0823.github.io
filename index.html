@@ -41,6 +41,7 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
     <script src="js/wow.min.js"></script>
+    <script src="js/comment.js"></script>
     <script>
         var wow = new WOW(
             {
@@ -405,10 +406,14 @@
                 </p>
             </div>
 
-            <!-- * 카카오맵 - 지도퍼가기 -->
-            <!-- 1. 지도 노드 -->
-            <div id="daumRoughmapContainer1748260407901" class="root_daum_roughmap root_daum_roughmap_landing"></div>
-
+            <!-- 지도 전체를 감싸는 박스 -->
+            <div class="map-wrapper" style="max-width: 768px; margin: 0 auto;">
+                <!-- 카카오 지도 컨테이너 -->
+                <div id="daumRoughmapContainer1748260407901"
+                    class="root_daum_roughmap root_daum_roughmap_landing">
+                </div>
+            </div>
+            
             <!--
                 2. 설치 스크립트
                 * 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
@@ -420,8 +425,8 @@
                 new daum.roughmap.Lander({
                     "timestamp" : "1748260407901",
                     "key" : "2gxq89wezsr",
-                    "mapWidth" : "640",
-                    "mapHeight" : "360"
+                    "mapWidth" : "100%",
+                    // "mapHeight" : "360"
                 }).render();
             </script>
             
@@ -527,6 +532,17 @@
             <br/><br/>
             <br/><br/>
         </footer> -->
+
+        <div class="wow fadeInUp inner cover-container d-flex w-100 h-100 mx-auto flex-column">
+            <p class="wow fadeInUp section8-title section8-main">축하의 글 남기기</p>
+        
+            <input id="comment-author" type="text" placeholder="이름을 입력하세요" style="margin-bottom: 0.5em;" />
+            <textarea id="comment-input" rows="3" placeholder="메시지를 입력하세요..." class="section8-main" style="width: 100%; color: black;"></textarea>
+            <button id="submit-comment" style="margin-top: 0.5em; align-self: flex-end;">남기기</button>
+        
+            <div id="comment-list" style="margin-top: 2em;"></div>
+        </div>
+
     </main>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

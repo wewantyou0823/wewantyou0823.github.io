@@ -452,6 +452,37 @@ header {
   background-color: #f9f9f9;
 }
 
+.section8-title {
+  font-family: DancingScript-b;
+  margin-top: 1em;
+  color: #333;
+  text-shadow: none;
+}
+
+.section8-main {
+  font-family: DancingScript-b;
+  line-height: 1.5em;
+  font-size: 2rem;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.section8-image {
+  box-shadow : 2px 2px 5px #999;
+}
+
+.comment {
+  font-family: NanumMyeongjo-b;
+  border-bottom: 1px solid #1e0101;
+  padding: 0.5em 0;
+}
+
+.comment-time {
+  font-family: NanumMyeongjo-b;
+  font-size: 0.9rem;
+  color: #777;
+}
+
 /*
  * Cover
  */
