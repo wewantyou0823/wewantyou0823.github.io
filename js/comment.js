@@ -1,47 +1,59 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxW2rFfVa_dU1rok8P7NgSycQxerFBK2e2iL77adEdi8ZksbQ3vNhVFtkrGxEXkv0As/exec';
+document.addEventListener("DOMContentLoaded", () => {
+  const authorInput = document.getElementById("comment-author");
+  const commentInput = document.getElementById("comment-input");
+  const submitButton = document.getElementById("submit-comment");
+  const commentList = document.getElementById("comment-list");
 
-document.getElementById('submit-comment').addEventListener('click', () => {
-  const name = document.getElementById('comment-name').value.trim() || "익명";
-  const comment = document.getElementById('comment-input').value.trim();
+  const dbRef = firebase.database().ref("comments");
 
-  if (!comment) {
-    alert("댓글을 입력해주세요!");
-    return;
-  }
+  // 댓글 작성
+  submitButton.addEventListener("click", () => {
+    const author = authorInput.value.trim() || "익명";
+    const message = commentInput.value.trim();
+    if (!message) return;
 
-  fetch(scriptURL, {
-    method: 'POST',
-    body: JSON.stringify({ name, comment }),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(() => {
-    document.getElementById('comment-input').value = '';
-    document.getElementById('comment-name').value = '';
-    loadComments();
-  })
-  .catch(err => {
-    alert("댓글 저장 중 오류가 발생했습니다.");
-    console.error(err);
+    const timestamp = new Date().toISOString();
+
+    dbRef.push({
+      author,
+      message,
+      timestamp
+    });
+
+    commentInput.value = "";
+  });
+
+  // 댓글 표시 (최신순 정렬)
+  dbRef.orderByChild("timestamp").on("value", (snapshot) => {
+    const comments = snapshot.val();
+    commentList.innerHTML = "";
+
+    const commentArray = comments
+      ? Object.entries(comments).sort((a, b) => b[1].timestamp.localeCompare(a[1].timestamp))
+      : [];
+
+    commentArray.forEach(([id, comment]) => {
+      const time = new Date(comment.timestamp).toLocaleString("ko-KR", {
+        dateStyle: "short",
+        timeStyle: "short"
+      });
+
+      const commentBox = document.createElement("div");
+      commentBox.style.marginBottom = "1em";
+      commentBox.innerHTML = `
+        <div style="
+          white-space: pre-wrap;
+          font-weight: 500;
+          font-size: 1.1em;
+          font-family: 'Noto Sans KR', sans-serif;
+          color: #222;
+        ">${comment.message}</div>
+        <div style="font-size: 0.9em; color: gray; margin-top: 0.3em;">
+          — ${comment.author}, ${time}
+        </div>
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 0.8em 0;">
+      `;
+      commentList.appendChild(commentBox);
+    });
   });
 });
-
-function loadComments() {
-  fetch(scriptURL)
-    .then(res => res.json())
-    .then(data => {
-      const list = document.getElementById('comment-list');
-      list.innerHTML = '';
-      data.forEach(entry => {
-        const div = document.createElement('div');
-        div.className = 'comment';
-        div.innerHTML = `<strong>${entry.name}</strong>: ${entry.comment}<br/>
-                         <span class="comment-time">${new Date(entry.time).toLocaleString()}</span>`;
-        list.appendChild(div);
-      });
-    });
-}
-
-// 초기 로딩 시 실행
-loadComments();

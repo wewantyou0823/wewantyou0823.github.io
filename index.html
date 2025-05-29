@@ -41,6 +41,27 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
     <script src="js/wow.min.js"></script>
+    <!-- Firebase App (기본 SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="js/comment.js"></script>
+
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyAcxHYrvMx8VfuW70n3NY7kBnczABJbNPU",
+          authDomain: "wedding-comments-7c5e5.firebaseapp.com",
+          databaseURL: "https://wedding-comments-7c5e5-default-rtdb.firebaseio.com",
+          projectId: "wedding-comments-7c5e5",
+          storageBucket: "wedding-comments-7c5e5.appspot.com",  // 오타 있었음: `.app` → `.appspot.com`
+          messagingSenderId: "1017259180252",
+          appId: "1:1017259180252:web:b6802a5ce55274c10eb419",
+          measurementId: "G-0RVE22D7V0"
+        };
+      
+        // compat 방식 초기화
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
     <script>
         var wow = new WOW(
             {
@@ -72,6 +93,7 @@
             $("#d-day").html(dDay);
         });
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body class="text-center">
 <div class="top-div">
@@ -405,28 +427,26 @@
                 </p>
             </div>
 
-            <!-- 지도 전체를 감싸는 박스 -->
-            <div class="map-wrapper" style="max-width: 768px; margin: 0 auto;">
-                <!-- 카카오 지도 컨테이너 -->
-                <div id="daumRoughmapContainer1748260407901"
-                    class="root_daum_roughmap root_daum_roughmap_landing">
-                </div>
-            </div>
-            
-            <!--
-                2. 설치 스크립트
-                * 지도 퍼가기 서비스를 2개 이상 넣을 경우, 설치 스크립트는 하나만 삽입합니다.
-            -->
-            <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
+            <div id="map" class="wow fadeInUp" style="width:100%;height:350px;"></div>
 
-            <!-- 3. 실행 스크립트 -->
-            <script charset="UTF-8">
-                new daum.roughmap.Lander({
-                    "timestamp" : "1748260407901",
-                    "key" : "2gxq89wezsr",
-                    "mapWidth" : "100%",
-                    // "mapHeight" : "360"
-                }).render();
+            <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=5d7f9d7815aa2b19b5f3dcdd2789c78d"></script>
+            <script>
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                    mapOption = {
+                        center: new kakao.maps.LatLng(37.5054332, 126.8839722), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    };
+
+                var map = new kakao.maps.Map(mapContainer, mapOption);
+                var markerPosition  = new kakao.maps.LatLng(37.5054332, 126.8839722);
+
+                // 마커를 생성합니다
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition
+                });
+
+                // 마커가 지도 위에 표시되도록 설정합니다
+                marker.setMap(map);
             </script>
             
             <div class="wow fadeInUp section6-location p-3">
@@ -526,13 +546,8 @@
             <br/><br/>
             <br/><br/>
         </div>
-        <!-- <footer class="pt-5 text-muted text-center text-small section8">
-            <p class="mb-1">© 2020-11-28 Myungwoon, Jeaeun</p>
-            <br/><br/>
-            <br/><br/>
-        </footer> -->
 
-        <div class="wow fadeInUp inner cover-container d-flex w-100 h-100 mx-auto flex-column">
+        <!-- <div class="wow fadeInUp inner cover-container d-flex w-100 h-100 mx-auto flex-column">
             <p class="wow fadeInUp section8-title section8-main">축하의 글 남기기</p>
         
             <input id="comment-author" type="text" placeholder="이름을 입력하세요" style="margin-bottom: 0.5em;" />
@@ -540,7 +555,17 @@
             <button id="submit-comment" style="margin-top: 0.5em; align-self: flex-end;">남기기</button>
         
             <div id="comment-list" style="margin-top: 2em;"></div>
-            <script src="js/comment.js"></script>
+        </div> -->
+
+        <div class="wow fadeInUp inner cover-container d-flex w-100 h-100 mx-auto flex-column">
+            <!-- <p class="comment-title">축하의 글 남기기</p> -->
+            <p class="wow fadeInUp section6-title section6-main">축하의 글 남기기</p>
+          
+            <input id="comment-author" type="text" placeholder="이름을 입력하세요" class="comment-input" />
+            <textarea id="comment-input" rows="3" placeholder="메시지를 입력하세요..." class="comment-textarea"></textarea>
+            <button id="submit-comment" class="comment-submit">남기기</button>
+          
+            <div id="comment-list" class="comment-list"></div>
         </div>
 
     </main>

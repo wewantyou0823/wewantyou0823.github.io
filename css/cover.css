@@ -471,7 +471,7 @@ header {
   box-shadow : 2px 2px 5px #999;
 }
 
-textarea,
+/* textarea,
 input {
   width: 100%;
   margin-bottom: 0.5em;
@@ -502,6 +502,95 @@ button {
   font-family: NanumMyeongjo-b;
   font-size: 0.9rem;
   color: #777;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Noto+Sans+KR&display=swap');
+
+body {
+  background: #fffaf4;
+  font-family: 'Noto Sans KR', sans-serif;
+  margin: 0;
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+}
+
+.comment-container {
+  max-width: 600px;
+  width: 100%;
+  background: #fffefc;
+  border: 2px solid #e9dcc9;
+  padding: 2em;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.comment-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2em;
+  text-align: center;
+  margin-bottom: 1em;
+  color: #a67c52;
+}
+
+.comment-input,
+.comment-textarea {
+  width: 100%;
+  padding: 0.75em 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ddd0bd;
+  border-radius: 8px;
+  font-size: 1em;
+  background: #fdfaf5;
+  color: #333;
+  transition: border 0.2s;
+}
+
+.comment-input:focus,
+.comment-textarea:focus {
+  border-color: #d4af7f;
+  outline: none;
+}
+
+.comment-submit {
+  background: #d4af7f;
+  color: white;
+  padding: 0.6em 1.2em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  align-self: flex-end;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.comment-submit:hover {
+  background: #c39b6f;
+}
+
+.comment-list {
+  margin-top: 2em;
+}
+
+.comment-list > div {
+  background: #fef9f2;
+  border-left: 4px solid #d4af7f;
+  padding: 1em;
+  border-radius: 8px;
+  margin-bottom: 1em;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.comment-list > div div:first-child {
+  white-space: pre-wrap;
+  font-weight: 500;
+  font-size: 1.05em;
+  margin-bottom: 0.5em;
+}
+
+.comment-list > div div:nth-child(2) {
+  font-size: 0.9em;
+  color: #666;
 }
 
 /*
@@ -515,6 +604,9 @@ button {
   font-weight: 700;
 }
 
+.root_daum_roughmap {
+  margin: auto !important;
+}
 
 /*
  * Footer
