@@ -614,3 +614,50 @@ body {
 .mastfoot {
   color: rgba(255, 255, 255, .5);
 }
+
+#carouselExampleControls img {
+  pointer-events: none;
+}
+
+#gallery-thumbnails img {
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+#gallery-thumbnails img:hover {
+  transform: scale(1.05);
+}
+
+#galleryModal .modal-content {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+#galleryModal .modal-body {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: none !important;
+}
+
+.custom-gallery-btn {
+  background-color: #fffaf4;  /* 페이지 배경색과 동일하게 */
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.5em 1.2em;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.custom-gallery-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.carousel-item {
+  transition: transform 0.3s ease; /* 원하는 전환 속도로 설정 */
+}
