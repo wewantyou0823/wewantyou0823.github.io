@@ -1,5 +1,25 @@
 <!doctype html>
 <html lang="en">
+<body class="text-center">
+    <audio id="background-music" src="music/As Lovers Do.mp3" autoplay loop></audio>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('background-music');
+            audio.volume = 0.5;  // Optional: set initial volume
+    
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Autoplay started successfully
+                }).catch((error) => {
+                    // Autoplay was blocked; wait for user interaction
+                    document.body.addEventListener('click', () => {
+                        audio.play();
+                    }, { once: true });
+                });
+            }
+        });
+    </script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
@@ -119,10 +139,13 @@
         </div>
         <div class="wow fadeInUp">
             <p class="wow fadeInUp section2-title section2-main inner cover cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
-                예쁜 예감이 들었다 <br/>
-                우리는 언제나 손을 잡고 있게 될 것이다.
-                <br/><br/>
-                - 이이체, 연인 -
+                최고의 사랑은 영혼을 일깨우고 <br/>
+                더 많이 소망하게 되고, <br/>
+                가슴에 열정을, 마음에 평화를 주지. <br/>
+                네게서 그걸 얻었고, <br/>
+                너에게 영원히 주고 싶어. <br/>
+                <br/>
+                - 영화 노트북 -
             </p>
             <br/>
         </div>
@@ -314,7 +337,7 @@
                         </div>
                         <div class="modal-body section7-modal section7-modal-content">
                             신랑 : 우리 1002-781-030697 김우재<br/>
-                            신랑 혼주: 농협 352-0686-7347-73 김진구<br/>
+                            신랑 아버지: 농협 352-0686-7347-73 김진구<br/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -337,8 +360,9 @@
                             </button>
                         </div>
                         <div class="modal-body section7-modal section7-modal-content">
-                            신부 : 우리 ????-???-?????? 이시목 <br/>
-                            신부 혼주 : 우리 ????-???-?????? 이시목
+                            신부 : 우리 1002-354-810476 이시목<br/>
+                            신부 아버지 : 신한 307-12-259562 이경수<br/>
+                            신부 어머니 : 국민 816901-04-315537 김수자
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
