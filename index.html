@@ -98,7 +98,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <body class="text-center">
-<audio id="background-music" src="music/As Lovers Do.mp3" autoplay loop></audio>
+
+<audio id="background-music" src="music/As Lovers Do.mp3" loop></audio>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = document.getElementById('background-music');
+
+    const tryPlay = () => {
+        audio.play().then(() => {
+            console.log('음악 재생 시작!');
+            // 이벤트 리스너 제거
+            window.removeEventListener('scroll', tryPlay);
+            window.removeEventListener('wheel', tryPlay);
+            window.removeEventListener('touchmove', tryPlay);
+            window.removeEventListener('click', tryPlay);
+            window.removeEventListener('touchstart', tryPlay);
+        }).catch(err => {
+            console.warn('자동재생 차단됨:', err);
+        });
+    };
+
+    window.addEventListener('scroll', tryPlay, { once: true });
+    window.addEventListener('wheel', tryPlay, { once: true });
+    window.addEventListener('touchmove', tryPlay, { once: true });
+    window.addEventListener('click', tryPlay, { once: true });
+    window.addEventListener('touchstart', tryPlay, { once: true });
+});
+</script>
+
 <div class="top-div">
     <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 0.5em; margin-right: 0.5em; font-size: 2rem;">
