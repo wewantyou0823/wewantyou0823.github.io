@@ -1,25 +1,54 @@
 <!doctype html>
 <html lang="en">
 <body class="text-center">
-    <audio id="background-music" src="music/As Lovers Do.mp3" autoplay loop></audio>
+    <!-- Background Music -->
+    <audio id="background-music" src="music/As Lovers Do.mp3" loop></audio>
+
+    <!-- Play/Pause Button -->
+    <div id="music-control" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 9999;">
+        <button id="play-button" style="
+            background-color: #d4af7f;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        ">
+            ▶️ 노래 재생
+        </button>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('background-music');
-            audio.volume = 0.5;  // Optional: set initial volume
-    
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    // Autoplay started successfully
-                }).catch((error) => {
-                    // Autoplay was blocked; wait for user interaction
-                    document.body.addEventListener('click', () => {
-                        audio.play();
-                    }, { once: true });
-                });
-            }
+            audio.volume = 0.5;
+
+            const playButton = document.getElementById('play-button');
+            let isPlaying = false;
+
+            playButton.addEventListener('click', function() {
+                if (!isPlaying) {
+                    audio.play()
+                        .then(() => {
+                            isPlaying = true;
+                            playButton.textContent = "⏸️ 재생중";
+                            playButton.style.backgroundColor = "#aaa";
+                        })
+                        .catch((error) => {
+                            console.error("Autoplay was blocked or an error occurred:", error);
+                        });
+                } else {
+                    audio.pause();
+                    isPlaying = false;
+                    playButton.textContent = "▶️ 노래 재생";
+                    playButton.style.backgroundColor = "#d4af7f";
+                }
+            });
         });
     </script>
+</body>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no,target-densitydpi=medium-dpi">
