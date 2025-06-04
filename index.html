@@ -658,7 +658,19 @@ document.addEventListener('DOMContentLoaded', function() {
     carouselIndex.textContent = `1 / ${imageSources.length}`;
 
     document.querySelectorAll('img').forEach(img => {
-        img.addEventListener('contextmenu', (e) => e.preventDefault());
+        // 기존 contextmenu 제거
+        img.addEventListener('contextmenu', e => e.preventDefault());
+
+        // 모바일 롱프레스 방지
+        let pressTimer = null;
+        img.addEventListener('touchstart', e => {
+            pressTimer = setTimeout(() => {
+                e.preventDefault();
+            }, 500); // 롱프레스가 500ms 이상이면 context menu 발생하므로 방지
+        });
+        img.addEventListener('touchend', e => {
+            clearTimeout(pressTimer);
+        });
     });
 });
 </script>
